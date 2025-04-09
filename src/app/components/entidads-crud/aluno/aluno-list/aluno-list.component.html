@@ -1,1 +1,71 @@
-<p>aluno-list works!</p>
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-12 azul">
+      <div class="card">
+        <div class="card-body alinharDiretira">
+          <div
+            class="d-flex align-items-center justify-content-between mb-3 text-center col-12"
+          >
+            <div class="d-flex text-nowrap gap-2">
+              <p class="fs-3 m-0 fw-bold">Aluno crud geral</p>
+              <input
+                type="search"
+                class="form-control rounded"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="search-addon"
+                [(ngModel)]="searchTerm"
+              />
+            </div>
+            <p class="my-2 btn btn-primary" (click)="new()">
+              Registrar um aluno novo
+            </p>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NOME</th>
+                <th class="flex justify-end gap-2" scope="col">AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (al of lista; track $index) {
+              <tr>
+                <td>{{ al.id }}</td>
+                <td>{{ al.nome }}</td>
+                <td class="flex justify-end gap-2">
+                  <button (click)="edit(al)" class="btn btn-primary">
+                    Editar
+                  </button>
+                  <button (click)="delete(al.id)" class="btn btn-danger">
+                    Deletar
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalAlunoForm>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-aluno-form
+      [aluno]="alunoEdit"
+      (customEvent)="myCustomEvent($event)"
+    ></app-aluno-form>
+  </div>
+</ng-template>

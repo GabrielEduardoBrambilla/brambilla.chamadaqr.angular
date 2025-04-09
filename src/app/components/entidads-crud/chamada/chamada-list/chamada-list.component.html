@@ -1,1 +1,72 @@
-<p>chamada-list works!</p>
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-12 azul">
+      <div class="card">
+        <div class="card-body alinharDiretira">
+          <div
+            class="d-flex align-items-center justify-content-between mb-3 text-center col-12"
+          >
+            <p class="fs-3 fw-bold">Chamada atual</p>
+            <p class="my-2 btn btn-primary" (click)="new()">
+              Iniciar uma chamada
+            </p>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">RA</th>
+                <th scope="col">NOME</th>
+                <th class="flex justify-end gap-2" scope="col">AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (al of lista; track $index) {
+              <tr>
+                <td>{{ al.id }}</td>
+                <td>{{ al.nome }}</td>
+                <td class="flex justify-end gap-2">
+                  <!-- (click)="edit(al)" -->
+                  <button class="btn btn-primary">Editar</button>
+                  <button class="btn btn-danger">Deletar</button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalChamadaForm>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-chamada-form />
+  </div>
+</ng-template>
+
+<ng-template #modalAlunoForm>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-aluno-form
+      [aluno]="alunoEdit"
+      (customEvent)="myCustomEvent($event)"
+    ></app-aluno-form>
+  </div>
+</ng-template>

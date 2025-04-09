@@ -31,26 +31,41 @@
       mdbCollapse
       #buttonsNav="mdbCollapse"
     >
+      @if(isAdmin == false){
       <!-- Link for the normal User -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-          <a class="nav-link" href="#">Find By Alert Level</a>
+          <a class="nav-link" href="#">Quantidade Presenças</a>
         </li>
       </ul>
+      }@else {
+      <!-- Link for the Admin User -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <!-- Trazer a quantidade de alunos e infos nesse sentido -->
+          <!-- Trazer o find by aler nivel -->
+          <a class="nav-link" href="#">Turma geral</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="professor/chamada/">Criar chamada</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="aluno/">AlunoCRUD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="professor/">Professor CRUD</a>
+        </li>
+      </ul>
+      }
       <!-- Left links -->
 
       <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-link px-3 me-2">Login</button>
-        <button type="button" class="btn btn-primary me-3">
-          Sign up for free
+        <button type="button" class="btn btn-primary btn-floating" mdbRipple>
+          <i class="fas fa-user-circle"></i>
         </button>
-        <a
-          class="btn btn-dark px-3"
-          href="https://github.com/mdbootstrap/mdb-ui-kit"
-          role="button"
-          ><i class="fab fa-github"></i
-        ></a>
       </div>
     </div>
     <!-- Collapsible wrapper -->

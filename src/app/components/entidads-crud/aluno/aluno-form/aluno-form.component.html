@@ -1,1 +1,66 @@
-<p>aluno-form works!</p>
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="">
+        <div class="centralizar">
+          <h2 class="mb-2 text-2xl font-bold">Cadastro novo aluno</h2>
+
+          <form #formulario="ngForm">
+            Nome do aluno<br />
+            <input
+              required
+              [(ngModel)]="aluno.nome"
+              type="text"
+              class="mb-2 form-control"
+              name="nome"
+            />
+            RA do aluno<br />
+            <input
+              required
+              [(ngModel)]="aluno.ra"
+              type="text"
+              class="mb-2 form-control"
+              name="ra"
+            />
+            Senha<br />
+            <input
+              required
+              [(ngModel)]="aluno.password"
+              type="text"
+              class="mb-2 form-control"
+              name="password"
+            />
+            <div class="mb-4 col-12">
+              @if(aluno.turma != null){
+              <button
+                type="button"
+                class="btn btn-warning"
+                (click)="selecionarTurma()"
+              >
+                Trocar de turma
+              </button>
+              }@else {
+              <button
+                type="button"
+                (click)="selecionarTurma()"
+                class="btn btn-success"
+              >
+                Selecionar turma
+              </button>
+              }
+            </div>
+
+            <button
+              (click)="save()"
+              [disabled]="!formulario.valid"
+              class="w-full btn btn-success"
+            >
+              Salvar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

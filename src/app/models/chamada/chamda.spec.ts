@@ -1,7 +1,7 @@
-import { Chamda } from './chamda';
+import { Chamada } from './chamada';
 
 describe('Chamda', () => {
   it('should create an instance', () => {
-    expect(new Chamda()).toBeTruthy();
+    expect(new Chamada()).toBeTruthy();
   });
 });

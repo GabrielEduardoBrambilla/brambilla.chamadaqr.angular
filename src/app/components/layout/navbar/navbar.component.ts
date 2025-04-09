@@ -9,6 +9,8 @@ import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
+  isAdmin = true;
+
   constructor() {
     // Swal.fire('Hey user!', 'You are the rockstar!', 'info');
   }

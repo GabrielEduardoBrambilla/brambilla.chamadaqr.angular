@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="container min-h-screen flex justify-center items-center">
+  <div class="row">
+    <div class="col-12">
+      <div class="card p-4 m-auto mt-5 mb-5">
+        <div class="card-body">
+          <h2>Autentique-se:</h2>
+
+          <mdb-form-control>
+            <input
+              [(ngModel)]="login.username"
+              mdbInput
+              type="text"
+              id="login"
+              class="form-control"
+            />
+            <label mdbLabel class="form-label" for="login">Username:</label>
+          </mdb-form-control>
+          <br />
+          <mdb-form-control>
+            <input
+              (keyup.enter)="logar()"
+              [(ngModel)]="login.password"
+              mdbInput
+              type="text"
+              id="senha"
+              class="form-control"
+            />
+            <label mdbLabel class="form-label" for="senha">Password:</label>
+          </mdb-form-control>
+          <br />
+
+          <button
+            (click)="logar()"
+            type="button"
+            class="btn btn-primary"
+            mdbRipple
+          >
+            Entrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
