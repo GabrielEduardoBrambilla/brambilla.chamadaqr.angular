@@ -1,1 +1,66 @@
-<p>turma-form works!</p>
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="">
+        <div class="centralizar">
+          <h2 class="mb-2 text-2xl font-bold">Cadastro novo turma</h2>
+
+          <form #formulario="ngForm">
+            Nome do curso<br />
+            <input
+              required
+              [(ngModel)]="turma.curso"
+              type="text"
+              class="mb-2 form-control"
+              name="nome"
+            />
+            Quantidade de alunos na turma<br />
+            <input
+              required
+              [(ngModel)]="turma.qtdAlunos"
+              type="text"
+              class="mb-2 form-control"
+              name="ra"
+            />
+            Semestre<br />
+            <input
+              required
+              [(ngModel)]="turma.semestre"
+              type="text"
+              class="mb-2 form-control"
+              name="password"
+            />
+            <div class="mb-4 col-12">
+              <!-- @if(turma. != null){
+              <button
+                type="button"
+                class="btn btn-warning"
+                (click)="selecionarTurma()"
+              >
+                Trocar de turma
+              </button>
+              }@else {
+              <button
+                type="button"
+                (click)="selecionarTurma()"
+                class="btn btn-success"
+              >
+                Selecionar turma
+              </button>
+              } -->
+            </div>
+
+            <button
+              (click)="save()"
+              [disabled]="!formulario.valid"
+              class="w-full btn btn-success"
+            >
+              Salvar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

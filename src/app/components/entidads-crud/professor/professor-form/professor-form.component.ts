@@ -1,15 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
 import { Professor } from '../../../../models/professor/professor';
 import { ProfessorService } from '../../../../services/professor/professor.service';
+import { TurmaListComponent } from '../../turma/turma-list/turma-list.component';
 
 @Component({
   selector: 'app-professor-form',
   standalone: true,
-  imports: [FormsModule, MdbFormsModule, CommonModule],
+  imports: [FormsModule, MdbFormsModule, CommonModule, TurmaListComponent],
   templateUrl: './professor-form.component.html',
   styleUrls: ['./professor-form.component.scss'],
 })
@@ -18,6 +28,10 @@ export class ProfessorFormComponent {
   @Output('customEvent') event = new EventEmitter(); //ELE VAI PEGAR QUALQUER COISA E EMITIR
 
   professorService = inject(ProfessorService);
+  modalService = inject(MdbModalService);
+
+  @ViewChild('modalTurmaSelect') modalTurmaSelect!: TemplateRef<any>; //referência ao template da modal
+  modalRef!: MdbModalRef<any>;
 
   save() {
     if (this.professor.id) {
@@ -48,5 +62,11 @@ export class ProfessorFormComponent {
         },
       });
     }
+  }
+
+  selecionarTurma() {
+    this.modalRef = this.modalService.open(this.modalTurmaSelect, {
+      modalClass: 'modal-xl',
+    });
   }
 }

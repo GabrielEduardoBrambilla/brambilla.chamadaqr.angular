@@ -13,8 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
-import { Aluno } from '../../../../models/aluno/aluno';
 import { ChamadaService } from '../../../../services/chamada/chamada.service';
+import { Chamada } from '../../../../models/chamada/chamada';
 
 @Component({
   selector: 'app-chamada-form',
@@ -26,7 +26,7 @@ import { ChamadaService } from '../../../../services/chamada/chamada.service';
 export class ChamadaFormComponent {
   selectedDate: string = '';
 
-  @Input('aluno') aluno: Aluno = new Aluno();
+  @Input('chamada') chamada: Chamada = new Chamada();
   @Output('customEvent') event = new EventEmitter(); //ELE VAI PEGAR QUALQUER COISA E EMITIR
 
   modalService = inject(MdbModalService);
@@ -38,10 +38,10 @@ export class ChamadaFormComponent {
   chamadaService = inject(ChamadaService);
 
   save() {
-    this.chamadaService.save(this.aluno).subscribe({
+    this.chamadaService.save(this.chamada).subscribe({
       next: (mensagem) => {
         Swal.fire(mensagem, '', 'success');
-        this.roteador.navigate(['aluno/list']);
+        this.roteador.navigate(['chamada/list']);
         this.event.emit('OK');
       },
       error: (erro) => {

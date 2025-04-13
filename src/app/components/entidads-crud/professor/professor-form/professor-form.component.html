@@ -32,6 +32,18 @@
     />
     <label mdbLabel class="form-label" for="senha">Senha</label>
   </mdb-form-control>
+  <div class="mb-4 col-12">
+    @if(professor.turmas != null){
+    <button type="button" class="btn btn-warning" (click)="selecionarTurma()">
+      Trocar de turma
+    </button>
+    }@else {
+    <button type="button" (click)="selecionarTurma()" class="btn btn-success">
+      Selecionar turma
+    </button>
+    }
+  </div>
+
   <button
     mdbRipple
     type="button"
@@ -41,3 +53,17 @@
     Registrar professor
   </button>
 </form>
+
+<ng-template #modalTurmaSelect>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-turma-list></app-turma-list>
+  </div>
+</ng-template>

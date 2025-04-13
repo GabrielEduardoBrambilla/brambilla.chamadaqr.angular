@@ -9,12 +9,12 @@ import { Chamada } from '../../models/chamada/chamada';
 export class ChamadaService {
   http = inject(HttpClient);
 
-  API = 'http://localhost:8080/chamada';
+  API = 'http://localhost:8080/chamadas';
 
   constructor() {}
 
   findAll(): Observable<Chamada[]> {
-    return this.http.get<Chamada[]>(this.API + '/findAll');
+    return this.http.get<Chamada[]>(this.API + '/');
   }
 
   findById(id: number): Observable<Chamada> {

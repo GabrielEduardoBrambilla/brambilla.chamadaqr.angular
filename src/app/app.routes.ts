@@ -37,4 +37,15 @@ export const routes: Routes = [
       // },
     ],
   },
+  {
+    path: 'turma',
+    component: LayoutComponent,
+    children: [
+      { path: '', pathMatch: 'full', component: TurmaListComponent },
+      // {
+      //   path: 'edit/:id',
+      //   component: AlunosFormComponent,
+      // },
+    ],
+  },
 ];
