@@ -1,52 +1,52 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
-import { Aluno } from '../../../../models/aluno/aluno';
-import { ChamadaService } from '../../../../service/chamada/chamada.service';
+import { Professor } from '../../../../models/professor/professor';
+import { ProfessorService } from '../../../../services/professor/professor.service';
 
 @Component({
   selector: 'app-professor-form',
   standalone: true,
   imports: [FormsModule, MdbFormsModule, CommonModule],
   templateUrl: './professor-form.component.html',
-  styleUrl: './professor-form.component.scss',
+  styleUrls: ['./professor-form.component.scss'],
 })
 export class ProfessorFormComponent {
-  selectedDate: string = '';
-
-  @Input('aluno') aluno: Aluno = new Aluno();
+  @Input() professor: Professor = new Professor();
   @Output('customEvent') event = new EventEmitter(); //ELE VAI PEGAR QUALQUER COISA E EMITIR
 
-  modalService = inject(MdbModalService);
-  @ViewChild('modalTurmaList') modalTurmaList!: TemplateRef<any>; //referência ao template da modal
-  modalRef!: MdbModalRef<any>;
-
-  rotaAtivida = inject(ActivatedRoute);
-  roteador = inject(Router);
-  chamadaService = inject(ChamadaService);
+  professorService = inject(ProfessorService);
 
   save() {
-    this.chamadaService.save(this.aluno).subscribe({
-      next: (mensagem) => {
-        Swal.fire(mensagem, '', 'success');
-        this.roteador.navigate(['aluno/list']);
-        this.event.emit('OK');
-      },
-      error: (erro) => {
-        Swal.fire(erro.error, '', 'error');
-      },
-    });
+    if (this.professor.id) {
+      this.professorService
+        .update(this.professor, this.professor.id)
+        .subscribe({
+          next: () => {
+            Swal.fire('Professor atualizado com sucesso!');
+            this.event.emit('OK');
+          },
+          error: (err) => {
+            Swal.fire('Erro ao atualizar professor.');
+            console.error(err);
+            this.event.emit('OK');
+          },
+        });
+    } else {
+      this.professorService.save(this.professor).subscribe({
+        next: () => {
+          Swal.fire('Professor registrado com sucesso!');
+          this.professor = new Professor(); // Reset form
+          this.event.emit('OK');
+        },
+        error: (err) => {
+          Swal.fire('Erro ao registrar professor.');
+          console.error(err);
+          this.event.emit('OK');
+        },
+      });
+    }
   }
 }

@@ -6,7 +6,7 @@ import {
   MdbModalService,
 } from 'mdb-angular-ui-kit/modal';
 import { Aluno } from '../../../../models/aluno/aluno';
-import { AlunoService } from '../../../../service/aluno/aluno.service';
+import { AlunoService } from '../../../../services/aluno/aluno.service';
 import { AlunoFormComponent } from '../../aluno/aluno-form/aluno-form.component';
 import { ChamadaFormComponent } from '../chamada-form/chamada-form.component';
 

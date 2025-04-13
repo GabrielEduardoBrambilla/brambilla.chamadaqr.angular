@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
 import { Aluno } from '../../../../models/aluno/aluno';
-import { AlunoService } from '../../../../service/aluno/aluno.service';
+import { AlunoService } from '../../../../services/aluno/aluno.service';
 
 @Component({
   selector: 'app-aluno-form',
@@ -47,18 +47,22 @@ export class AlunoFormComponent {
         error: (erro) => {
           console.log(erro);
           Swal.fire(erro.error, '', 'error');
+          this.roteador.navigate(['app/aluno/list']);
+          this.event.emit('OK');
         },
       });
     } else {
       // SAVE
       this.alService.save(this.aluno).subscribe({
         next: (mensagem) => {
-          // Swal.fire(mensagem, '', 'success');
+          Swal.fire(mensagem, '', 'success');
           this.roteador.navigate(['app/aluno/list']);
           this.event.emit('OK');
         },
         error: (erro) => {
-          // Swal.fire(erro.error, '', 'error');
+          Swal.fire(erro.error, '', 'error');
+          this.roteador.navigate(['app/aluno/list']);
+          this.event.emit('OK');
         },
       });
     }

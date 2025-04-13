@@ -5,8 +5,8 @@ import {
   MdbModalRef,
   MdbModalService,
 } from 'mdb-angular-ui-kit/modal';
-import { Aluno } from '../../../../models/aluno/aluno';
-import { AlunoService } from '../../../../service/aluno/aluno.service';
+import { Professor } from '../../../../models/professor/professor';
+import { ProfessorService } from '../../../../services/professor/professor.service';
 import { ProfessorFormComponent } from '../professor-form/professor-form.component';
 
 @Component({
@@ -17,14 +17,14 @@ import { ProfessorFormComponent } from '../professor-form/professor-form.compone
   styleUrl: './professor-list.component.scss',
 })
 export class ProfessorListComponent {
-  lista: Aluno[] = [];
-  alunoEdit!: Aluno;
+  lista: Professor[] = [];
+  professorEdit!: Professor;
 
-  alunoService = inject(AlunoService);
+  professorService = inject(ProfessorService);
 
   modalService = inject(MdbModalService);
   @ViewChild('modalAlunoForm') modalAlunoForm!: TemplateRef<any>;
-  @ViewChild('modalChamadaForm') modalChamadaForm!: TemplateRef<any>;
+  @ViewChild('modalProfessorForm') modalProfessorForm!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
   searchTerm = '';
   constructor() {
@@ -32,7 +32,7 @@ export class ProfessorListComponent {
   }
 
   findAll() {
-    this.alunoService.findAll().subscribe({
+    this.professorService.findAll().subscribe({
       next: (listaRetornada) => {
         this.lista = listaRetornada;
       },
@@ -40,15 +40,15 @@ export class ProfessorListComponent {
     });
   }
   new() {
-    this.alunoEdit = new Aluno();
-    this.modalRef = this.modalService.open(this.modalChamadaForm, {
+    this.professorEdit = new Professor();
+    this.modalRef = this.modalService.open(this.modalProfessorForm, {
       modalClass: 'modal-md',
     });
   }
 
-  edit(aluno: Aluno) {
-    this.alunoEdit = aluno;
-    this.modalRef = this.modalService.open(this.modalAlunoForm, {
+  edit(professor: Professor) {
+    this.professorEdit = professor;
+    this.modalRef = this.modalService.open(this.modalProfessorForm, {
       modalClass: 'modal-md',
     });
   }
@@ -60,7 +60,7 @@ export class ProfessorListComponent {
 
   delete(id: number) {
     if (confirm('Deseja deletar isso aí?')) {
-      this.alunoService.deleteById(id).subscribe({
+      this.professorService.deleteById(id).subscribe({
         next: (listaRetornada) => {
           this.findAll();
         },

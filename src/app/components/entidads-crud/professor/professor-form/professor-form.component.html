@@ -3,67 +3,35 @@
     <input
       mdbInput
       type="text"
-      id="formControlLg"
+      id="nome"
       class="form-control form-control-lg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
+      [(ngModel)]="professor.nome"
+      name="nome"
     />
-    <label
-      mdbLabel
-      class="form-label"
-      for="formControlLg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
-      >Nome do professor</label
-    >
+    <label mdbLabel class="form-label" for="nome">Nome do professor</label>
   </mdb-form-control>
   <mdb-form-control class="mb-3 mt-3">
     <input
       mdbInput
-      type="text"
-      id="formControlLg"
+      type="email"
+      id="email"
       class="form-control form-control-lg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
+      [(ngModel)]="professor.email"
+      name="email"
     />
-    <label
-      mdbLabel
-      class="form-label"
-      for="formControlLg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
-      >Email institucional</label
-    >
+    <label mdbLabel class="form-label" for="email">Email institucional</label>
   </mdb-form-control>
   <mdb-form-control class="mb-3 mt-3">
     <input
       mdbInput
-      type="text"
-      id="formControlLg"
+      type="password"
+      id="senha"
       class="form-control form-control-lg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
+      [(ngModel)]="professor.senha"
+      name="senha"
     />
-    <label
-      mdbLabel
-      class="form-label"
-      for="formControlLg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
-      >Senha</label
-    >
+    <label mdbLabel class="form-label" for="senha">Senha</label>
   </mdb-form-control>
-  <mdb-form-control class="mb-3 mt-3">
-    <input
-      mdbInput
-      type="text"
-      id="formControlLg"
-      class="form-control form-control-lg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
-    />
-    <label
-      mdbLabel
-      class="form-label"
-      for="formControlLg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
-      >Turma</label
-    >
-  </mdb-form-control>
-  <!-- Submit button -->
   <button
     mdbRipple
     type="button"

@@ -37,8 +37,12 @@
                 <td>{{ al.nome }}</td>
                 <td class="flex justify-end gap-2">
                   <!-- (click)="edit(al)" -->
-                  <button class="btn btn-primary">Editar</button>
-                  <button class="btn btn-danger">Deletar</button>
+                  <button class="btn btn-primary" (click)="edit(al)">
+                    Editar
+                  </button>
+                  <button class="btn btn-danger" (click)="delete(al.id)">
+                    Deletar
+                  </button>
                 </td>
               </tr>
               }
@@ -50,7 +54,7 @@
   </div>
 </div>
 
-<ng-template #modalChamadaForm>
+<ng-template #modalProfessorForm>
   <div class="modal-header">
     <button
       type="button"
@@ -61,24 +65,7 @@
   </div>
   <div class="modal-body">
     <app-professor-form
-      [aluno]="alunoEdit"
-      (customEvent)="myCustomEvent($event)"
-    ></app-professor-form>
-  </div>
-</ng-template>
-
-<ng-template #modalAlunoForm>
-  <div class="modal-header">
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="modalRef.close()"
-    ></button>
-  </div>
-  <div class="modal-body">
-    <app-professor-form
-      [aluno]="alunoEdit"
+      [professor]="professorEdit"
       (customEvent)="myCustomEvent($event)"
     ></app-professor-form>
   </div>

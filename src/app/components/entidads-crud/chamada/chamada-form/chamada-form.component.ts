@@ -14,7 +14,7 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
 import { Aluno } from '../../../../models/aluno/aluno';
-import { ChamadaService } from '../../../../service/chamada/chamada.service';
+import { ChamadaService } from '../../../../services/chamada/chamada.service';
 
 @Component({
   selector: 'app-chamada-form',
