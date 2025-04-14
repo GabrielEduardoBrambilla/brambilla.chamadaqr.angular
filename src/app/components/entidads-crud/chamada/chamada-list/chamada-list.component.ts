@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
@@ -15,8 +16,12 @@ import {
   MdbModalRef,
   MdbModalService,
 } from 'mdb-angular-ui-kit/modal';
+import { firstValueFrom } from 'rxjs';
 import { Chamada } from '../../../../models/chamada/chamada';
+import { Professor } from '../../../../models/professor/professor';
+import { Turma } from '../../../../models/turma/turma';
 import { ChamadaService } from '../../../../services/chamada/chamada.service';
+import { ProfessorService } from '../../../../services/professor/professor.service';
 import { ChamadaFormComponent } from '../../chamada/chamada-form/chamada-form.component';
 import { TurmaListComponent } from '../../turma/turma-list/turma-list.component';
 
@@ -35,7 +40,8 @@ import { TurmaListComponent } from '../../turma/turma-list/turma-list.component'
   styleUrl: './chamada-list.component.scss',
 })
 export class ChamadaListComponent {
-  lista: Chamada[] = [];
+  lista!: Chamada[];
+  listaProfessores!: Professor[];
   chamadaEdit!: Chamada;
 
   searchTerm = '';
@@ -48,14 +54,38 @@ export class ChamadaListComponent {
   @ViewChild('modalChamadaForm') modalChamadaForm!: TemplateRef<any>;
   @ViewChild('modalTurmaSelectChamadaForm')
   modalTurmaSelectChamadaForm!: TemplateRef<any>;
+  @ViewChild('modalProfessor')
+  modalProfessor!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
   @Output() confirm = new EventEmitter<Chamada[]>();
+  cdr = inject(ChangeDetectorRef); // injeção direta
+  professorService = inject(ProfessorService);
 
-  constructor() {
-    // this.selectedChamadas = this.currentSelectedChamadas;
-    this.findAll();
+  selectedProfessor!: Professor;
+  selectedTurma!: Turma;
+
+  constructor() {}
+
+  openSelectProfessorModal() {
+    this.chamadaEdit = new Chamada();
+    this.modalRef = this.modalService.open(this.modalProfessor, {
+      modalClass: 'modal-md',
+    });
+    this.findAllProfessores();
   }
-
+  selecionarProfessor(professor: Professor): void {
+    this.selectedProfessor = professor;
+    this.modalRef.close();
+  }
+  findAllProfessores() {
+    this.professorService.findAll().subscribe({
+      next: (listaRetornada) => {
+        this.listaProfessores = listaRetornada;
+      },
+      error: (erro) => {},
+    });
+    console.log(this.lista);
+  }
   selectTurma() {
     this.chamadaEdit = new Chamada();
     this.modalRef = this.modalService.open(this.modalTurmaSelectChamadaForm, {
@@ -108,5 +138,37 @@ export class ChamadaListComponent {
         error: (erro) => {},
       });
     }
+  }
+
+  async onTurmaSelected(turma: Turma) {
+    this.selectedTurma = turma;
+    this.modalRef.close();
+    try {
+      const listaRetornada = await firstValueFrom(
+        this.chamadaService.findByTurmaId(turma.id)
+      );
+
+      this.lista = [...listaRetornada];
+      this.cdr.detectChanges();
+      console.log('Turma selecionada:', this.lista);
+    } catch (erro) {
+      console.error('Erro ao buscar chamadas:', erro);
+    }
+    // this.findByTurmaId(turma);
+    // console.log('Turma selecionada:', this.lista);
+  }
+
+  findByTurmaId(turma: Turma) {
+    this.chamadaService.findByTurmaId(turma.id).subscribe({
+      next: (listaRetornada) => {
+        // console.log('Lista chamada:', listaRetornada);
+        // console.log('Before assignment:', this.lista);
+        this.lista = [...listaRetornada];
+        // console.log('After assignment:', this.lista);
+      },
+      error: (erro) => {
+        console.error('Erro ao buscar chamadas:', erro);
+      },
+    });
   }
 }

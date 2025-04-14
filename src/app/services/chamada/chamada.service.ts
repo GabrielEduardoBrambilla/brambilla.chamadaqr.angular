@@ -21,6 +21,10 @@ export class ChamadaService {
     return this.http.get<Chamada>(this.API + '/findById/' + id);
   }
 
+  findByTurmaId(id: number): Observable<Chamada[]> {
+    return this.http.get<Chamada[]>(this.API + `/findByTurmaId/${id}`);
+  }
+
   findByNome(nome: string): Observable<Chamada[]> {
     let par = new HttpParams().set('nome', nome);
 

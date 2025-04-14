@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  EventEmitter,
   inject,
   Input,
+  Output,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -34,6 +36,7 @@ export class TurmaListComponent {
   @ViewChild('modalTurmaForm') modalTurmaForm!: TemplateRef<any>; //referência ao template da modal
   modalRef!: MdbModalRef<any>;
   @Input('isTurmaSelect') isTurmaSelect: boolean = false;
+  @Output() turmaSelected = new EventEmitter<Turma>();
 
   constructor() {
     this.findAll();
@@ -65,7 +68,9 @@ export class TurmaListComponent {
     this.findAll();
     this.modalRef.close();
   }
-  selectTurmaChamada(turma: Turma) {}
+  selectTurmaChamada(turma: Turma) {
+    this.turmaSelected.emit(turma);
+  }
 
   delete(id: number) {
     Swal.fire({

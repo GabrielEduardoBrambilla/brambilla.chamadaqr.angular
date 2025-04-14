@@ -29,13 +29,7 @@ export const routes: Routes = [
   {
     path: 'aluno',
     component: LayoutComponent,
-    children: [
-      { path: '', pathMatch: 'full', component: AlunoListComponent },
-      // {
-      //   path: 'edit/:id',
-      //   component: AlunosFormComponent,
-      // },
-    ],
+    children: [{ path: '', pathMatch: 'full', component: AlunoListComponent }],
   },
   {
     path: 'turma',

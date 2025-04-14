@@ -39,7 +39,7 @@ export class ChamadaFormComponent {
   constructor() {}
 
   save() {
-    if (this.chamada.id > 0) {
+    if (this.chamada && this.chamada.id > 0) {
       // UPDATE
       this.alService.update(this.chamada, this.chamada.id).subscribe({
         next: (mensagem) => {

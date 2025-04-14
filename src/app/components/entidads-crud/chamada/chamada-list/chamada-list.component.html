@@ -9,8 +9,19 @@
           >
             <div class="d-flex text-nowrap gap-2">
               <p class="fs-3 m-0 fw-bold">Criar chamadas</p>
-              <button (click)="selectTurma()" class="btn btn-primary">
+              <button
+                (click)="selectTurma()"
+                [disabled]="selectedTurma"
+                class="btn btn-primary"
+              >
                 Selecionar turma
+              </button>
+              <button
+                (click)="openSelectProfessorModal()"
+                [disabled]="selectedProfessor"
+                class="btn btn-primary"
+              >
+                Selecionar professor
               </button>
             </div>
             <p class="my-2 btn btn-primary" (click)="new()">
@@ -20,26 +31,25 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">ID</th>
-                <th scope="col">NOME</th>
+                <th scope="col">Data de criação</th>
+                <th scope="col">Prof. Responsavel</th>
+                <th scope="col">Qtd Alunos</th>
+                <th scope="col">Curso</th>
                 <th class="d-flex justify-content-end gap-2" scope="col">
-                  AÇÕES
+                  Ações
                 </th>
               </tr>
             </thead>
             <tbody>
               @for (al of lista; track $index) {
               <tr>
-                <td>{{ al.curso }}</td>
-                <td>{{ al.professorResponsavel }}</td>
-                <td class="d-flex justify-content-end gap-2">
-                  <button (click)="edit(al)" class="btn btn-primary">
-                    Editar
-                  </button>
-                  <button (click)="delete(al.id)" class="btn btn-danger">
-                    Deletar
-                  </button>
+                <td>{{ al.createdAt }}</td>
+                <td>{{ al.professor.nome }}</td>
+                <td>{{ al.qtdAlunos }}</td>
+                <td>
+                  {{ al.turma.curso }}
                 </td>
+                <td class="d-flex justify-content-end gap-2">Actions</td>
               </tr>
               }
             </tbody>
@@ -63,7 +73,7 @@
     <app-chamada-form
       [chamada]="chamadaEdit"
       (customEvent)="myCustomEvent($event)"
-    />
+    ></app-chamada-form>
   </div>
 </ng-template>
 
@@ -79,7 +89,56 @@
   <div class="modal-body">
     <app-turma-list
       [isTurmaSelect]="true"
-      (customEvent)="myCustomEvent($event)"
-    />
+      (turmaSelected)="onTurmaSelected($event)"
+    ></app-turma-list>
+  </div>
+</ng-template>
+
+<ng-template #modalProfessor>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 azul">
+          <div class="">
+            <div class="card-body alinharDiretira">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">NOME</th>
+                    <th class="flex justify-end gap-2" scope="col">
+                      Selecionar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (al of listaProfessores; track $index) {
+                  <tr>
+                    <td>{{ al.id }}</td>
+                    <td>{{ al.nome }}</td>
+                    <td class="flex justify-end gap-2">
+                      <button
+                        class="btn btn-success"
+                        (click)="selecionarProfessor(al)"
+                      >
+                        Selecionar
+                      </button>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
