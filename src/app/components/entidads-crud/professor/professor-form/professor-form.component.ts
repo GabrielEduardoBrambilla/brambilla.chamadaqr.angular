@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
@@ -25,13 +26,31 @@ import { TurmaListComponent } from '../../turma/turma-list/turma-list.component'
 })
 export class ProfessorFormComponent {
   @Input() professor: Professor = new Professor();
-  @Output('customEvent') event = new EventEmitter(); //ELE VAI PEGAR QUALQUER COISA E EMITIR
 
+  @Output('customEvent') event = new EventEmitter();
+
+  rotaAtivida = inject(ActivatedRoute);
+  roteador = inject(Router);
   professorService = inject(ProfessorService);
   modalService = inject(MdbModalService);
 
-  @ViewChild('modalTurmaSelect') modalTurmaSelect!: TemplateRef<any>; //referência ao template da modal
+  @ViewChild('modalTurmaSelect') modalTurmaSelect!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
+
+  constructor() {
+    let id = this.rotaAtivida.snapshot.params['id'];
+    if (id) {
+      this.professorService.findById(id).subscribe({
+        next: (professor) => {
+          this.professor = professor;
+        },
+        error: (err) => {
+          console.error('Error fetching professor:', err);
+          Swal.fire('Erro ao carregar os dados do professor.');
+        },
+      });
+    }
+  }
 
   save() {
     if (this.professor.id) {

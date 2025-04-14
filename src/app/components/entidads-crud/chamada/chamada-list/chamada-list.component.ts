@@ -75,6 +75,8 @@ export class ChamadaListComponent {
   }
   selecionarProfessor(professor: Professor): void {
     this.selectedProfessor = professor;
+    this.chamadaEdit.professor = professor;
+
     this.modalRef.close();
   }
   findAllProfessores() {
@@ -87,7 +89,6 @@ export class ChamadaListComponent {
     console.log(this.lista);
   }
   selectTurma() {
-    this.chamadaEdit = new Chamada();
     this.modalRef = this.modalService.open(this.modalTurmaSelectChamadaForm, {
       modalClass: 'modal-md',
     });
@@ -110,7 +111,6 @@ export class ChamadaListComponent {
     });
   }
   new() {
-    this.chamadaEdit = new Chamada();
     this.modalRef = this.modalService.open(this.modalChamadaForm, {
       modalClass: 'modal-md',
     });
@@ -142,6 +142,7 @@ export class ChamadaListComponent {
 
   async onTurmaSelected(turma: Turma) {
     this.selectedTurma = turma;
+
     this.modalRef.close();
     try {
       const listaRetornada = await firstValueFrom(
@@ -150,6 +151,8 @@ export class ChamadaListComponent {
 
       this.lista = [...listaRetornada];
       this.cdr.detectChanges();
+      this.chamadaEdit.turma = turma;
+
       console.log('Turma selecionada:', this.lista);
     } catch (erro) {
       console.error('Erro ao buscar chamadas:', erro);

@@ -39,6 +39,8 @@ export class ChamadaFormComponent {
   constructor() {}
 
   save() {
+    this.chamada.createdAt = new Date(this.selectedDate);
+    console.log(this.chamada);
     if (this.chamada && this.chamada.id > 0) {
       // UPDATE
       this.alService.update(this.chamada, this.chamada.id).subscribe({

@@ -42,13 +42,13 @@ export class AlunoFormComponent {
       this.alService.update(this.aluno, this.aluno.id).subscribe({
         next: (mensagem) => {
           Swal.fire(mensagem, '', 'success');
-          this.roteador.navigate(['admin/als']);
+          // this.roteador.navigate(['admin/als']);
           this.event.emit('OK');
         },
         error: (erro) => {
           console.log(erro);
           Swal.fire(erro.error, '', 'error');
-          this.roteador.navigate(['app/aluno/list']);
+          // this.roteador.navigate(['app/aluno/list']);
           this.event.emit('OK');
         },
       });
@@ -57,12 +57,12 @@ export class AlunoFormComponent {
       this.alService.save(this.aluno).subscribe({
         next: (mensagem) => {
           Swal.fire(mensagem, '', 'success');
-          this.roteador.navigate(['app/aluno/list']);
+          // this.roteador.navigate(['app/aluno/list']);
           this.event.emit('OK');
         },
         error: (erro) => {
           Swal.fire(erro.error, '', 'error');
-          this.roteador.navigate(['app/aluno/list']);
+          // this.roteador.navigate(['app/aluno/list']);
           this.event.emit('OK');
         },
       });

@@ -16,24 +16,34 @@
       </p>
     </div>
   </mdb-form-control>
-  <mdb-form-control class="mb-3 mt-3">
+  <form #formulario="ngForm">
+    Nome do curso<br />
     <input
-      mdbInput
+      required
+      [(ngModel)]="chamada.qtdAlunos"
       type="text"
-      id="formControlLg"
-      class="form-control form-control-lg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
+      class="mb-2 form-control"
+      name="nome"
     />
-    <label
-      mdbLabel
-      class="form-label"
-      for="formControlLg"
-      mdbTooltip="Tempo que a chamada vai aceitar presenças"
-      >Duração em minutos</label
-    >
-  </mdb-form-control>
-  <!-- Submit button -->
-  <button type="button" class="btn btn-primary" (click)="save()">
-    Iniciar
-  </button>
+    Quantidade de alunos na chamada<br />
+    <input
+      required
+      [(ngModel)]="chamada.qtdAlunos"
+      type="text"
+      class="mb-2 form-control"
+      name="ra"
+    />
+    Intervalo entre Qr<br />
+    <input
+      required
+      [(ngModel)]="chamada.intervaloQr"
+      type="text"
+      class="mb-2 form-control"
+      name="password"
+    />
+  </form>
+
+  <button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
 </form>
+
+<!-- Submit button -->
