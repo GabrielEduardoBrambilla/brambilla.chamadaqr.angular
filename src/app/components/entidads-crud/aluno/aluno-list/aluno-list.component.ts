@@ -1,5 +1,15 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import {
   MdbModalModule,
   MdbModalRef,
@@ -12,22 +22,69 @@ import { AlunoFormComponent } from '../aluno-form/aluno-form.component';
 @Component({
   selector: 'app-alunos-list',
   standalone: true,
-  imports: [FormsModule, MdbModalModule, AlunoFormComponent],
+  imports: [
+    FormsModule,
+    MdbModalModule,
+    CommonModule,
+    AlunoFormComponent,
+    MdbCheckboxModule,
+  ],
   templateUrl: './aluno-list.component.html',
   styleUrl: './aluno-list.component.scss',
 })
 export class AlunoListComponent {
   lista: Aluno[] = [];
   alunoEdit!: Aluno;
-  alunoService = inject(AlunoService);
+
   searchTerm = '';
 
+  alunoService = inject(AlunoService);
   modalService = inject(MdbModalService);
-  @ViewChild('modalAlunoForm') modalAlunoForm!: TemplateRef<any>; //referência ao template da modal
+
+  @Input('currentSelectedAlunos') currentSelectedAlunos: Aluno[] = [];
+  @Input('isTurmaSelect') isTurmaSelect: boolean = false;
+  @ViewChild('modalAlunoForm') modalAlunoForm!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
+  @Output() confirm = new EventEmitter<Aluno[]>();
 
   constructor() {
+    // this.selectedAlunos = this.currentSelectedAlunos;
     this.findAll();
+  }
+
+  confirmSelectAlunos() {
+    this.confirm.emit(this.currentSelectedAlunos);
+  }
+  toggleAlunoTurma(event: Event, aluno: Aluno) {
+    const isChecked = (event.target as HTMLInputElement).checked;
+
+    if (isChecked) {
+      this.selectAlunoTurma(aluno);
+    } else {
+      this.deselectAlunoTurma(aluno);
+    }
+    console.log(this.currentSelectedAlunos);
+  }
+  selectAlunoTurma(aluno: Aluno) {
+    const alreadySelected = this.currentSelectedAlunos.some(
+      (a) => a.id === aluno.id
+    );
+    if (!alreadySelected) {
+      this.currentSelectedAlunos.push(aluno);
+    }
+  }
+  deselectAlunoTurma(aluno: Aluno) {
+    this.currentSelectedAlunos = this.currentSelectedAlunos.filter(
+      (a) => a.id !== aluno.id
+    );
+  }
+
+  isAlunoSelected(aluno: Aluno): boolean {
+    const isSelected = this.currentSelectedAlunos.some(
+      (selected) => selected.id === aluno.id
+    );
+    // isSelected ? this.selectAlunoTurma(aluno) : false;
+    return isSelected;
   }
 
   findAll() {

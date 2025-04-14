@@ -27,7 +27,7 @@ export class TurmaListComponent {
   modalRef!: MdbModalRef<any>;
 
   constructor() {
-    // this.findAll();
+    this.findAll();
   }
 
   findAll() {

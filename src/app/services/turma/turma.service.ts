@@ -43,9 +43,6 @@ export class TurmaService {
   }
 
   update(turma: Turma, id: number): Observable<string> {
-    console.log(turma);
-    console.log(turma);
-
     return this.http.put<string>(this.API + `/update/${id}`, turma, {
       responseType: 'text' as 'json',
     });

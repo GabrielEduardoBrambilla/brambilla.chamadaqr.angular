@@ -32,25 +32,43 @@
               name="password"
             />
             <div class="mb-4 col-12">
-              <!-- @if(turma. != null){
+              @if(turma.professorResponsavel != null){
               <button
                 type="button"
                 class="btn btn-warning"
-                (click)="selecionarTurma()"
+                (click)="openProfessormodal()"
               >
-                Trocar de turma
+                Trocar de professor responsavel
               </button>
               }@else {
               <button
                 type="button"
-                (click)="selecionarTurma()"
+                (click)="openProfessormodal()"
                 class="btn btn-success"
               >
-                Selecionar turma
+                Selecionar professor responsavel
               </button>
-              } -->
+              }
             </div>
-
+            <div class="mb-4 col-12">
+              @if(turma.alunos != null){
+              <button
+                type="button"
+                class="btn btn-warning"
+                (click)="openAlunosmodal()"
+              >
+                Trocar alunos da turma
+              </button>
+              }@else {
+              <button
+                type="button"
+                (click)="openAlunosmodal()"
+                class="btn btn-success"
+              >
+                Selecionar alunos da turma
+              </button>
+              }
+            </div>
             <button
               (click)="save()"
               [disabled]="!formulario.valid"
@@ -64,3 +82,70 @@
     </div>
   </div>
 </div>
+
+<ng-template #modalAlunosSelect>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-alunos-list
+      [isTurmaSelect]="true"
+      [currentSelectedAlunos]="turma.alunos"
+      (confirm)="handleAlunosConfirm($event)"
+    ></app-alunos-list>
+  </div>
+</ng-template>
+
+<ng-template #modalProfessor>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 azul">
+          <div class="">
+            <div class="card-body alinharDiretira">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">NOME</th>
+                    <th class="flex justify-end gap-2" scope="col">
+                      Selecionar
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (al of lista; track $index) {
+                  <tr>
+                    <td>{{ al.id }}</td>
+                    <td>{{ al.nome }}</td>
+                    <td class="flex justify-end gap-2">
+                      <button
+                        class="btn btn-success"
+                        (click)="selecionarProfessor(al)"
+                      >
+                        Selecionar
+                      </button>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

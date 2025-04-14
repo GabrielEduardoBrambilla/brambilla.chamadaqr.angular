@@ -19,14 +19,14 @@ import { ProfessorFormComponent } from '../professor-form/professor-form.compone
 export class ProfessorListComponent {
   lista: Professor[] = [];
   professorEdit!: Professor;
+  searchTerm = '';
 
   professorService = inject(ProfessorService);
-
   modalService = inject(MdbModalService);
-  @ViewChild('modalAlunoForm') modalAlunoForm!: TemplateRef<any>;
-  @ViewChild('modalProfessorForm') modalProfessorForm!: TemplateRef<any>;
+
+  @ViewChild('modalProfessorFormUNIQUE') modalProfessorForm!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
-  searchTerm = '';
+
   constructor() {
     this.findAll();
   }
@@ -42,7 +42,7 @@ export class ProfessorListComponent {
   new() {
     this.professorEdit = new Professor();
     this.modalRef = this.modalService.open(this.modalProfessorForm, {
-      modalClass: 'modal-md',
+      modalClass: 'modal-xl',
     });
   }
 

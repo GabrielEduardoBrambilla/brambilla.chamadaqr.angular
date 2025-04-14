@@ -36,7 +36,6 @@
                 <td>{{ al.id }}</td>
                 <td>{{ al.nome }}</td>
                 <td class="flex justify-end gap-2">
-                  <!-- (click)="edit(al)" -->
                   <button class="btn btn-primary" (click)="edit(al)">
                     Editar
                   </button>
@@ -54,7 +53,7 @@
   </div>
 </div>
 
-<ng-template #modalProfessorForm>
+<ng-template #modalProfessorFormUNIQUE>
   <div class="modal-header">
     <button
       type="button"

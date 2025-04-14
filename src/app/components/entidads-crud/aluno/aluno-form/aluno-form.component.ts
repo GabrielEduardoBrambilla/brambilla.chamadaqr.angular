@@ -13,11 +13,12 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
 import { Aluno } from '../../../../models/aluno/aluno';
 import { AlunoService } from '../../../../services/aluno/aluno.service';
+import { TurmaListComponent } from '../../turma/turma-list/turma-list.component';
 
 @Component({
   selector: 'app-aluno-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, TurmaListComponent],
   templateUrl: './aluno-form.component.html',
   styleUrl: './aluno-form.component.scss',
 })
