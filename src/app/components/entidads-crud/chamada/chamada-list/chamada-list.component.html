@@ -2,12 +2,17 @@
 <div class="container">
   <div class="row">
     <div class="col-12 azul">
-      <div class="card">
+      <div [ngClass]="{ card: !isTurmaSelect }">
         <div class="card-body alinharDiretira">
           <div
             class="d-flex align-items-center justify-content-between mb-3 text-center col-12"
           >
-            <p class="fs-3 fw-bold">Chamada atual</p>
+            <div class="d-flex text-nowrap gap-2">
+              <p class="fs-3 m-0 fw-bold">Criar chamadas</p>
+              <button (click)="selectTurma()" class="btn btn-primary">
+                Selecionar turma
+              </button>
+            </div>
             <p class="my-2 btn btn-primary" (click)="new()">
               Iniciar uma chamada
             </p>
@@ -15,20 +20,25 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">RA</th>
+                <th scope="col">ID</th>
                 <th scope="col">NOME</th>
-                <th class="flex justify-end gap-2" scope="col">AÇÕES</th>
+                <th class="d-flex justify-content-end gap-2" scope="col">
+                  AÇÕES
+                </th>
               </tr>
             </thead>
             <tbody>
               @for (al of lista; track $index) {
               <tr>
-                <td>{{ al.id }}</td>
-                <td>{{ al.nome }}</td>
-                <td class="flex justify-end gap-2">
-                  <!-- (click)="edit(al)" -->
-                  <button class="btn btn-primary">Editar</button>
-                  <button class="btn btn-danger">Deletar</button>
+                <td>{{ al.curso }}</td>
+                <td>{{ al.professorResponsavel }}</td>
+                <td class="d-flex justify-content-end gap-2">
+                  <button (click)="edit(al)" class="btn btn-primary">
+                    Editar
+                  </button>
+                  <button (click)="delete(al.id)" class="btn btn-danger">
+                    Deletar
+                  </button>
                 </td>
               </tr>
               }
@@ -50,11 +60,14 @@
     ></button>
   </div>
   <div class="modal-body">
-    <app-chamada-form />
+    <app-chamada-form
+      [chamada]="chamadaEdit"
+      (customEvent)="myCustomEvent($event)"
+    />
   </div>
 </ng-template>
 
-<ng-template #modalAlunoForm>
+<ng-template #modalTurmaSelectChamadaForm>
   <div class="modal-header">
     <button
       type="button"
@@ -64,9 +77,9 @@
     ></button>
   </div>
   <div class="modal-body">
-    <app-aluno-form
-      [aluno]="alunoEdit"
+    <app-turma-list
+      [isTurmaSelect]="true"
       (customEvent)="myCustomEvent($event)"
-    ></app-aluno-form>
+    />
   </div>
 </ng-template>

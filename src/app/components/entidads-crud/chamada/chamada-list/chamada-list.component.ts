@@ -1,44 +1,78 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import {
   MdbModalModule,
   MdbModalRef,
   MdbModalService,
 } from 'mdb-angular-ui-kit/modal';
-import { Aluno } from '../../../../models/aluno/aluno';
-import { AlunoService } from '../../../../services/aluno/aluno.service';
-import { AlunoFormComponent } from '../../aluno/aluno-form/aluno-form.component';
-import { ChamadaFormComponent } from '../chamada-form/chamada-form.component';
+import { Chamada } from '../../../../models/chamada/chamada';
+import { ChamadaService } from '../../../../services/chamada/chamada.service';
+import { ChamadaFormComponent } from '../../chamada/chamada-form/chamada-form.component';
+import { TurmaListComponent } from '../../turma/turma-list/turma-list.component';
 
 @Component({
   selector: 'app-chamada-list',
   standalone: true,
   imports: [
+    FormsModule,
     MdbModalModule,
-    AlunoFormComponent,
-    MdbFormsModule,
+    CommonModule,
     ChamadaFormComponent,
+    MdbCheckboxModule,
+    TurmaListComponent,
   ],
   templateUrl: './chamada-list.component.html',
   styleUrl: './chamada-list.component.scss',
 })
 export class ChamadaListComponent {
-  lista: Aluno[] = [];
-  alunoEdit!: Aluno;
+  lista: Chamada[] = [];
+  chamadaEdit!: Chamada;
 
-  alunoService = inject(AlunoService);
+  searchTerm = '';
 
+  chamadaService = inject(ChamadaService);
   modalService = inject(MdbModalService);
-  @ViewChild('modalAlunoForm') modalAlunoForm!: TemplateRef<any>;
+
+  @Input('currentSelectedChamadas') currentSelectedChamadas: Chamada[] = [];
+  @Input('isTurmaSelect') isTurmaSelect: boolean = false;
   @ViewChild('modalChamadaForm') modalChamadaForm!: TemplateRef<any>;
+  @ViewChild('modalTurmaSelectChamadaForm')
+  modalTurmaSelectChamadaForm!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
+  @Output() confirm = new EventEmitter<Chamada[]>();
 
   constructor() {
+    // this.selectedChamadas = this.currentSelectedChamadas;
     this.findAll();
   }
 
+  selectTurma() {
+    this.chamadaEdit = new Chamada();
+    this.modalRef = this.modalService.open(this.modalTurmaSelectChamadaForm, {
+      modalClass: 'modal-md',
+    });
+  }
+
+  isChamadaSelected(chamada: Chamada): boolean {
+    const isSelected = this.currentSelectedChamadas.some(
+      (selected) => selected.id === chamada.id
+    );
+    // isSelected ? this.selectChamadaTurma(chamada) : false;
+    return isSelected;
+  }
+
   findAll() {
-    this.alunoService.findAll().subscribe({
+    this.chamadaService.findAll().subscribe({
       next: (listaRetornada) => {
         this.lista = listaRetornada;
       },
@@ -46,15 +80,16 @@ export class ChamadaListComponent {
     });
   }
   new() {
-    this.alunoEdit = new Aluno();
+    this.chamadaEdit = new Chamada();
     this.modalRef = this.modalService.open(this.modalChamadaForm, {
       modalClass: 'modal-md',
     });
+    console.log('Entrou');
   }
 
-  edit(aluno: Aluno) {
-    this.alunoEdit = aluno;
-    this.modalRef = this.modalService.open(this.modalAlunoForm, {
+  edit(chamada: Chamada) {
+    this.chamadaEdit = chamada;
+    this.modalRef = this.modalService.open(this.modalChamadaForm, {
       modalClass: 'modal-md',
     });
   }
@@ -66,7 +101,7 @@ export class ChamadaListComponent {
 
   delete(id: number) {
     if (confirm('Deseja deletar isso aí?')) {
-      this.alunoService.deleteById(id).subscribe({
+      this.chamadaService.deleteById(id).subscribe({
         next: (listaRetornada) => {
           this.findAll();
         },

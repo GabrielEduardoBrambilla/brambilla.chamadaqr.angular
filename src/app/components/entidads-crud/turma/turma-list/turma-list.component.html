@@ -2,12 +2,15 @@
 <div class="container">
   <div class="row">
     <div class="col-12 azul">
-      <div class="card">
+      <div [ngClass]="{ card: !isTurmaSelect }">
         <div class="card-body alinharDiretira">
           <div
             class="d-flex align-items-center justify-content-between mb-3 text-center col-12"
           >
             <div class="d-flex text-nowrap gap-2">
+              @if (isTurmaSelect) {
+              <p class="fs-3 m-0 fw-bold">Selecionar Turma</p>
+              } @else {
               <p class="fs-3 m-0 fw-bold">Turma</p>
               <input
                 type="search"
@@ -17,17 +20,22 @@
                 aria-describedby="search-addon"
                 [(ngModel)]="searchTerm"
               />
+              }
             </div>
+            @if (!isTurmaSelect) {
             <p class="my-2 btn btn-primary" (click)="new()">
               Registrar uma nova Turma
             </p>
+            }
           </div>
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">NOME</th>
-                <th class="flex justify-end gap-2" scope="col">AÇÕES</th>
+                <th class="d-flex justify-content-end gap-2" scope="col">
+                  AÇÕES
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -35,14 +43,27 @@
               <tr>
                 <td>{{ al.id }}</td>
                 <td>{{ al.curso }}</td>
-                <td class="flex justify-end gap-2">
-                  <button (click)="edit(al)" class="btn btn-primary">
-                    Editar
+                @if (isTurmaSelect) {
+                <div class="d-flex justify-content-end gap-2">
+                  <button
+                    (click)="selectTurmaChamada(al)"
+                    class="btn btn-success"
+                  >
+                    Selecionar
                   </button>
-                  <button (click)="delete(al.id)" class="btn btn-danger">
-                    Deletar
-                  </button>
+                </div>
+                } @else {
+                <td>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button (click)="edit(al)" class="btn btn-primary">
+                      Editar
+                    </button>
+                    <button (click)="delete(al.id)" class="btn btn-danger">
+                      Deletar
+                    </button>
+                  </div>
                 </td>
+                }
               </tr>
               }
             </tbody>

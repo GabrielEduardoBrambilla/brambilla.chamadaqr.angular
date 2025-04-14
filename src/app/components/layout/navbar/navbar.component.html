@@ -3,15 +3,15 @@
   <!-- Container wrapper -->
   <div class="container">
     <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="https://mdbgo.com/">
+    <div class="navbar-brand me-2">
       <img
-        src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.webp"
-        height="16"
-        alt=""
-        loading="lazy"
-        style="margin-top: -1px"
+        [src]="'image.png'"
+        width="98"
+        height="100%"
+        style="object-fit: cover"
+        alt="Brand Logo"
       />
-    </a>
+    </div>
 
     <!-- Toggle button -->
     <button
@@ -42,15 +42,10 @@
       <!-- Link for the Admin User -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <!-- Trazer a quantidade de alunos e infos nesse sentido -->
-          <!-- Trazer o find by aler nivel -->
-          <a class="nav-link" href="turma/">Turma geral</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="professor/chamada/">Criar chamada</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="turma/">Turma geral</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="aluno/">AlunoCRUD</a>
@@ -60,15 +55,6 @@
         </li>
       </ul>
       }
-      <!-- Left links -->
-
-      <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-primary btn-floating" mdbRipple>
-          <i class="fas fa-user-circle"></i>
-        </button>
-      </div>
     </div>
-    <!-- Collapsible wrapper -->
   </div>
-  <!-- Container wrapper -->
 </nav>

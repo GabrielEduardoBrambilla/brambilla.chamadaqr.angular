@@ -13,8 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
-import { ChamadaService } from '../../../../services/chamada/chamada.service';
 import { Chamada } from '../../../../models/chamada/chamada';
+import { ChamadaService } from '../../../../services/chamada/chamada.service';
 
 @Component({
   selector: 'app-chamada-form',
@@ -24,8 +24,6 @@ import { Chamada } from '../../../../models/chamada/chamada';
   styleUrl: './chamada-form.component.scss',
 })
 export class ChamadaFormComponent {
-  selectedDate: string = '';
-
   @Input('chamada') chamada: Chamada = new Chamada();
   @Output('customEvent') event = new EventEmitter(); //ELE VAI PEGAR QUALQUER COISA E EMITIR
 
@@ -35,18 +33,49 @@ export class ChamadaFormComponent {
 
   rotaAtivida = inject(ActivatedRoute);
   roteador = inject(Router);
-  chamadaService = inject(ChamadaService);
+  alService = inject(ChamadaService);
+  selectedDate: string = '';
+
+  constructor() {}
 
   save() {
-    this.chamadaService.save(this.chamada).subscribe({
-      next: (mensagem) => {
-        Swal.fire(mensagem, '', 'success');
-        this.roteador.navigate(['chamada/list']);
-        this.event.emit('OK');
-      },
-      error: (erro) => {
-        Swal.fire(erro.error, '', 'error');
-      },
+    if (this.chamada.id > 0) {
+      // UPDATE
+      this.alService.update(this.chamada, this.chamada.id).subscribe({
+        next: (mensagem) => {
+          Swal.fire(mensagem, '', 'success');
+          // this.roteador.navigate(['admin/als']);
+          this.event.emit('OK');
+        },
+        error: (erro) => {
+          console.log(erro);
+          Swal.fire(erro.error, '', 'error');
+          // this.roteador.navigate(['app/chamada/list']);
+          this.event.emit('OK');
+        },
+      });
+    } else {
+      // SAVE
+      this.alService.save(this.chamada).subscribe({
+        next: (mensagem) => {
+          Swal.fire(mensagem, '', 'success');
+          // this.roteador.navigate(['app/chamada/list']);
+          this.event.emit('OK');
+        },
+        error: (erro) => {
+          Swal.fire(erro.error, '', 'error');
+          // this.roteador.navigate(['app/chamada/list']);
+          this.event.emit('OK');
+        },
+      });
+    }
+  }
+  selecionarTurma() {
+    this.modalRef = this.modalService.open(this.modalTurmaList, {
+      modalClass: 'modal-xl',
     });
+  }
+  myCustomEvent(mensagem: any) {
+    this.modalRef.close();
   }
 }
