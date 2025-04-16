@@ -38,18 +38,18 @@ export class ProfessorFormComponent {
   modalRef!: MdbModalRef<any>;
 
   constructor() {
-    let id = this.rotaAtivida.snapshot.params['id'];
-    if (id) {
-      this.professorService.findById(id).subscribe({
-        next: (professor) => {
-          this.professor = professor;
-        },
-        error: (err) => {
-          console.error('Error fetching professor:', err);
-          Swal.fire('Erro ao carregar os dados do professor.');
-        },
-      });
-    }
+    // let id = this.rotaAtivida.snapshot.params['id'];
+    // if (id) {
+    //   this.professorService.findById(id).subscribe({
+    //     next: (professor) => {
+    //       this.professor = professor;
+    //     },
+    //     error: (err) => {
+    //       console.error('Error fetching professor:', err);
+    //       Swal.fire('Erro ao carregar os dados do professor.');
+    //     },
+    //   });
+    // }
   }
 
   save() {

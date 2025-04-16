@@ -1,49 +1,35 @@
 <form>
-  <mdb-form-control>
-    <div class="flex flex-col space-y-2 w-64">
-      <label for="date" class="text-sm font-medium text-gray-700 me-2"
-        >Select a date</label
-      >
-      <input
-        id="date"
-        type="date"
-        class="border border-gray-300 rounded-lg px-3 py-2 shadow-sm focus:ring focus:ring-blue-300 focus:outline-none"
-        [(ngModel)]="selectedDate"
-        name="selectedDate"
-      />
-      <p class="mt-3 mb-0 text-sm text-gray-600">
-        Selected: {{ selectedDate || "None" }}
-      </p>
-    </div>
-  </mdb-form-control>
   <form #formulario="ngForm">
-    Nome do curso<br />
-    <input
-      required
-      [(ngModel)]="chamada.qtdAlunos"
-      type="text"
-      class="mb-2 form-control"
-      name="nome"
-    />
-    Quantidade de alunos na chamada<br />
-    <input
-      required
-      [(ngModel)]="chamada.qtdAlunos"
-      type="text"
-      class="mb-2 form-control"
-      name="ra"
-    />
-    Intervalo entre Qr<br />
-    <input
-      required
-      [(ngModel)]="chamada.intervaloQr"
-      type="text"
-      class="mb-2 form-control"
-      name="password"
-    />
+    <!-- Professor -->
+    @if (!selectedProfessor) {
+    <p class="text-danger fw-bold">Selecione um professor</p>
+    } @else {
+    <h3>Professor Selecionado</h3>
+    <p>{{ selectedProfessor.nome }}</p>
+    }
+
+    <!-- Turma -->
+    @if (!selectedTurma) {
+    <p class="text-danger fw-bold">Selecione uma turma</p>
+    } @else {
+    <h3>Turma Selecionada</h3>
+    <p>{{ selectedTurma.curso }}</p>
+    <p>{{ selectedTurma.ano }}</p>
+    <p>{{ selectedTurma.professorResponsavel?.nome }}</p>
+    <p>Quantidade de alunos na chamada: {{ selectedTurma.alunos?.length }}</p>
+    }
   </form>
 
-  <button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
+  @if ( selectedProfessor && selectedTurma &&
+  selectedTurma.professorResponsavel?.nome === selectedProfessor.nome ) {
+  <button type="button" class="btn btn-primary mt-3" (click)="save()">
+    Iniciar chamada
+  </button>
+  } @else {
+  <p class="text-warning mt-3">
+    O professor selecionado deve ser o responsável pela turma.
+  </p>
+  }
 </form>
 
 <!-- Submit button -->

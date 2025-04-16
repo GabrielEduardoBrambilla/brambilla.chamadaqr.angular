@@ -18,7 +18,6 @@
               </button>
               <button
                 (click)="openSelectProfessorModal()"
-                [disabled]="selectedProfessor"
                 class="btn btn-primary"
               >
                 Selecionar professor
@@ -49,7 +48,14 @@
                 <td>
                   {{ al.turma.curso }}
                 </td>
-                <td class="d-flex justify-content-end gap-2">Actions</td>
+                <td class="d-flex justify-content-end gap-2">
+                  <button class="btn btn-success" (click)="openChamada(al)">
+                    Ver chamada
+                  </button>
+                  <button class="btn btn-warning" (click)="openQRcode(al)">
+                    Ver QR Code
+                  </button>
+                </td>
               </tr>
               }
             </tbody>
@@ -59,6 +65,23 @@
     </div>
   </div>
 </div>
+
+<ng-template #modalChamadaDetails>
+  <div class="modal-header">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modalRef.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <app-presenca-list
+      [chamada]="selectedChamadaDetails"
+      (customEvent)="myCustomEvent($event)"
+    ></app-presenca-list>
+  </div>
+</ng-template>
 
 <ng-template #modalChamadaForm>
   <div class="modal-header">
@@ -72,6 +95,8 @@
   <div class="modal-body">
     <app-chamada-form
       [chamada]="chamadaEdit"
+      [professor]="selectedProfessor"
+      [turma]="selectedTurma"
       (customEvent)="myCustomEvent($event)"
     ></app-chamada-form>
   </div>

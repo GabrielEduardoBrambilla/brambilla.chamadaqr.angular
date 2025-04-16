@@ -1,1 +1,10 @@
-<p>presenca-list works!</p>
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="height: 100vh; background: #f9f9f9"
+>
+  <qrcode
+    [qrdata]="qrValue"
+    [width]="400"
+    [errorCorrectionLevel]="'M'"
+  ></qrcode>
+</div>

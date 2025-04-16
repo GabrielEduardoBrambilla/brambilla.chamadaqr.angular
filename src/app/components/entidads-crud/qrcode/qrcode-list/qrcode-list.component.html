@@ -1,1 +1,20 @@
-<p>qrcode-list works!</p>
+<div
+  class="d-flex justify-content-center align-items-center"
+  style="height: 60vh"
+>
+  <div
+    style="
+      padding: 1rem;
+      border: 8px solid #007bff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      background-color: white;
+    "
+  >
+    <qrcode
+      [qrdata]="qrValue"
+      [width]="300"
+      [errorCorrectionLevel]="'M'"
+    ></qrcode>
+  </div>
+</div>

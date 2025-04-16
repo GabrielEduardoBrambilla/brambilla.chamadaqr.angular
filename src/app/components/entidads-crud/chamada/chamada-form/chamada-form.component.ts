@@ -14,6 +14,8 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
 import { Chamada } from '../../../../models/chamada/chamada';
+import { Professor } from '../../../../models/professor/professor';
+import { Turma } from '../../../../models/turma/turma';
 import { ChamadaService } from '../../../../services/chamada/chamada.service';
 
 @Component({
@@ -25,6 +27,8 @@ import { ChamadaService } from '../../../../services/chamada/chamada.service';
 })
 export class ChamadaFormComponent {
   @Input('chamada') chamada: Chamada = new Chamada();
+  @Input('turma') selectedTurma: Turma = new Turma();
+  @Input('professor') selectedProfessor: Professor = new Professor();
   @Output('customEvent') event = new EventEmitter(); //ELE VAI PEGAR QUALQUER COISA E EMITIR
 
   modalService = inject(MdbModalService);
@@ -39,8 +43,6 @@ export class ChamadaFormComponent {
   constructor() {}
 
   save() {
-    this.chamada.createdAt = new Date(this.selectedDate);
-    console.log(this.chamada);
     if (this.chamada && this.chamada.id > 0) {
       // UPDATE
       this.alService.update(this.chamada, this.chamada.id).subscribe({
@@ -58,6 +60,9 @@ export class ChamadaFormComponent {
       });
     } else {
       // SAVE
+      this.chamada.createdAt = new Date();
+      this.chamada.professor = this.selectedProfessor;
+      this.chamada.turma = this.selectedTurma;
       this.alService.save(this.chamada).subscribe({
         next: (mensagem) => {
           Swal.fire(mensagem, '', 'success');

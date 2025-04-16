@@ -23,6 +23,7 @@ import { Turma } from '../../../../models/turma/turma';
 import { ChamadaService } from '../../../../services/chamada/chamada.service';
 import { ProfessorService } from '../../../../services/professor/professor.service';
 import { ChamadaFormComponent } from '../../chamada/chamada-form/chamada-form.component';
+import { PresencaListComponent } from '../../presenca/presenca-list/presenca-list.component';
 import { TurmaListComponent } from '../../turma/turma-list/turma-list.component';
 
 @Component({
@@ -35,6 +36,7 @@ import { TurmaListComponent } from '../../turma/turma-list/turma-list.component'
     ChamadaFormComponent,
     MdbCheckboxModule,
     TurmaListComponent,
+    PresencaListComponent,
   ],
   templateUrl: './chamada-list.component.html',
   styleUrl: './chamada-list.component.scss',
@@ -54,18 +56,32 @@ export class ChamadaListComponent {
   @ViewChild('modalChamadaForm') modalChamadaForm!: TemplateRef<any>;
   @ViewChild('modalTurmaSelectChamadaForm')
   modalTurmaSelectChamadaForm!: TemplateRef<any>;
-  @ViewChild('modalProfessor')
-  modalProfessor!: TemplateRef<any>;
+  @ViewChild('modalProfessor') modalProfessor!: TemplateRef<any>;
+  @ViewChild('modalChamadaDetails') modalChamadaDetails!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
   @Output() confirm = new EventEmitter<Chamada[]>();
   cdr = inject(ChangeDetectorRef); // injeção direta
   professorService = inject(ProfessorService);
 
+  selectedChamadaDetails!: Chamada;
   selectedProfessor!: Professor;
   selectedTurma!: Turma;
 
   constructor() {}
 
+  openQRcode(al: Chamada) {
+    console.log(al);
+    const id = al.id;
+
+    const url = `http://localhost:4200/professor/chamada/${id}`;
+    window.open(url, '_blank');
+  }
+  openChamada(al: Chamada) {
+    this.selectedChamadaDetails = al;
+    this.modalRef = this.modalService.open(this.modalChamadaDetails, {
+      modalClass: 'modal-xl',
+    });
+  }
   openSelectProfessorModal() {
     this.chamadaEdit = new Chamada();
     this.modalRef = this.modalService.open(this.modalProfessor, {
