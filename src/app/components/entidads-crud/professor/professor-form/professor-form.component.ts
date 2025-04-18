@@ -62,7 +62,7 @@ export class ProfessorFormComponent {
             this.event.emit('OK');
           },
           error: (err) => {
-            Swal.fire('Erro ao atualizar professor.');
+            Swal.fire(err.error);
             console.error(err);
             this.event.emit('OK');
           },
@@ -75,7 +75,7 @@ export class ProfessorFormComponent {
           this.event.emit('OK');
         },
         error: (err) => {
-          Swal.fire('Erro ao registrar professor.');
+          Swal.fire(err.error);
           console.error(err);
           this.event.emit('OK');
         },
