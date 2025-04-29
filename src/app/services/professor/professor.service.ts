@@ -16,6 +16,9 @@ export class ProfessorService {
   findAll(): Observable<Professor[]> {
     return this.http.get<Professor[]>(this.API + '/findAll');
   }
+  customSearch(): Observable<Professor[]> {
+    return this.http.get<Professor[]>(this.API + '/search');
+  }
 
   save(professor: Professor): Observable<string> {
     return this.http.post<string>(this.API + '/save', professor, {

@@ -50,6 +50,14 @@ export class TurmaListComponent {
       error: (erro) => {},
     });
   }
+  findSearched() {
+    this.turmaService.customSearch().subscribe({
+      next: (listaRetornada) => {
+        this.lista = listaRetornada;
+      },
+      error: (erro) => {},
+    });
+  }
   new() {
     this.turmaEdit = new Turma();
     this.modalRef = this.modalService.open(this.modalTurmaForm, {

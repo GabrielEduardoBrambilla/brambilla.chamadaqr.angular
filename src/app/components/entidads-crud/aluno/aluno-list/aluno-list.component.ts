@@ -95,6 +95,14 @@ export class AlunoListComponent {
       error: (erro) => {},
     });
   }
+  findSearched() {
+    this.alunoService.customSearch().subscribe({
+      next: (listaRetornada) => {
+        this.lista = listaRetornada;
+      },
+      error: (erro) => {},
+    });
+  }
   new() {
     this.alunoEdit = new Aluno();
     this.modalRef = this.modalService.open(this.modalAlunoForm, {

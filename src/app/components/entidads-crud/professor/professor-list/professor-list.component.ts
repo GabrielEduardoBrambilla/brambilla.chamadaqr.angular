@@ -39,6 +39,14 @@ export class ProfessorListComponent {
       error: (erro) => {},
     });
   }
+  findSearched() {
+    this.professorService.customSearch().subscribe({
+      next: (listaRetornada) => {
+        this.lista = listaRetornada;
+      },
+      error: (erro) => {},
+    });
+  }
   new() {
     this.professorEdit = new Professor();
     this.modalRef = this.modalService.open(this.modalProfessorForm, {

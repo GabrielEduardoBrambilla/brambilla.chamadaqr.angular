@@ -16,7 +16,9 @@ export class AlunoService {
   findAll(): Observable<Aluno[]> {
     return this.http.get<Aluno[]>(this.API + '/findAll');
   }
-
+  customSearch(): Observable<Aluno[]> {
+    return this.http.get<Aluno[]>(this.API + '/search');
+  }
   findById(id: number): Observable<Aluno> {
     return this.http.get<Aluno>(this.API + '/findById/' + id);
   }

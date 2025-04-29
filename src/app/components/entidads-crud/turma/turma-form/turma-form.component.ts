@@ -98,20 +98,6 @@ export class TurmaFormComponent {
     this.findAllProfessores();
   }
 
-  // selecionarProfessor(id: number): void {
-  //   this.turma.professorResponsavel = id;
-  //   this.modalRef.close();
-  //   console.log(this.turma);
-  // }
-  // findAllProfessores() {
-  //   this.professorService.findAll().subscribe({
-  //     next: (listaRetornada) => {
-  //       this.lista = listaRetornada;
-  //     },
-  //     error: (erro) => {},
-  //   });
-  //   console.log(this.lista);
-  // }
   openProfessormodal() {
     this.modalRef = this.modalService.open(this.modalProfessorSelect, {
       modalClass: 'modal-xl',

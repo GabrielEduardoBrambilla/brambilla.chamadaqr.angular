@@ -76,6 +76,14 @@ export class ChamadaListComponent {
     const url = `http://localhost:4200/professor/chamada/${id}`;
     window.open(url, '_blank');
   }
+  findSearched() {
+    this.chamadaService.customSearch().subscribe({
+      next: (listaRetornada) => {
+        this.lista = listaRetornada;
+      },
+      error: (erro) => {},
+    });
+  }
   openChamada(al: Chamada) {
     this.selectedChamadaDetails = al;
     this.modalRef = this.modalService.open(this.modalChamadaDetails, {

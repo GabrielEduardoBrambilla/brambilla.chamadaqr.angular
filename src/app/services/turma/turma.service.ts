@@ -16,7 +16,9 @@ export class TurmaService {
   findAll(): Observable<Turma[]> {
     return this.http.get<Turma[]>(this.API + '/findAll');
   }
-
+  customSearch(): Observable<Turma[]> {
+    return this.http.get<Turma[]>(this.API + '/search');
+  }
   save(turma: Turma): Observable<string> {
     return this.http.post<string>(this.API + '/save', turma, {
       headers: { 'Content-Type': 'application/json' },

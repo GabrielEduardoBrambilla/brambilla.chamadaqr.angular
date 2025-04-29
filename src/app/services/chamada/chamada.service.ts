@@ -16,7 +16,9 @@ export class ChamadaService {
   findAll(): Observable<Chamada[]> {
     return this.http.get<Chamada[]>(this.API + '/');
   }
-
+  customSearch(): Observable<Chamada[]> {
+    return this.http.get<Chamada[]>(this.API + '/search');
+  }
   findById(id: number): Observable<Chamada> {
     return this.http.get<Chamada>(this.API + '/findById/' + id);
   }
