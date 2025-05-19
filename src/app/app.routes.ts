@@ -1,12 +1,13 @@
 import { Routes } from '@angular/router';
+import { loginGuard } from './auth/login.guard';
 import { AlunoListComponent } from './components/entidads-crud/aluno/aluno-list/aluno-list.component';
 import { ChamadaListComponent } from './components/entidads-crud/chamada/chamada-list/chamada-list.component';
 import { ProfessorFormComponent } from './components/entidads-crud/professor/professor-form/professor-form.component';
 import { ProfessorListComponent } from './components/entidads-crud/professor/professor-list/professor-list.component';
 import { QrcodeListComponent } from './components/entidads-crud/qrcode/qrcode-list/qrcode-list.component';
 import { TurmaListComponent } from './components/entidads-crud/turma/turma-list/turma-list.component';
-import { LayoutComponent } from './page/layout/layout.component';
 import { LoginComponent } from './components/public/login/login.component';
+import { LayoutComponent } from './page/layout/layout.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,7 @@ export const routes: Routes = [
   {
     path: 'professor',
     component: LayoutComponent,
+    canActivate: [loginGuard],
     children: [
       { path: '', pathMatch: 'full', component: ProfessorListComponent },
       {

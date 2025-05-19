@@ -25,21 +25,23 @@ export class LoginComponent {
   }
 
   logar() {
-    this.router.navigate(['professor']);
+    console.log(this.login);
+    console.log(this.login);
+    console.log(this.login);
+    this.loginService.logar(this.login).subscribe({
+      next: (token) => {
+        if (token) this.loginService.addToken(token); //MUITO IMPORTANTE
 
-    // this.loginService.logar(this.login).subscribe({
-    //   next: (token) => {
-    //     if (token) this.loginService.addToken(token); //MUITO IMPORTANTE
-
-    //     this.gerarToast().fire({ icon: 'success', title: 'Seja bem-vindo!' });
-    //     this.router.navigate(['admin/dashboard']);
-
-    //     this.router.navigate(['/admin/carros']);
-    //   },
-    //   error: (erro) => {
-    //     Swal.fire('Usuário ou senha incorretos!', '', 'error');
-    //   },
-    // });
+        this.gerarToast().fire({ icon: 'success', title: 'Seja bem-vindo!' });
+        this.loginService.hasRole('PROFESSOR')
+          ? this.router.navigate(['professor'])
+          : this.router.navigate(['aluno']);
+      },
+      error: (erro) => {
+        console.log(erro);
+        Swal.fire('Usuário ou senha incorretos!', '', 'error');
+      },
+    });
   }
 
   gerarToast() {
