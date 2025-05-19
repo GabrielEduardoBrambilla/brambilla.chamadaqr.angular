@@ -5,8 +5,8 @@ import { ProfessorFormComponent } from './components/entidads-crud/professor/pro
 import { ProfessorListComponent } from './components/entidads-crud/professor/professor-list/professor-list.component';
 import { QrcodeListComponent } from './components/entidads-crud/qrcode/qrcode-list/qrcode-list.component';
 import { TurmaListComponent } from './components/entidads-crud/turma/turma-list/turma-list.component';
-import { LoginComponent } from './components/public/login/login.component';
 import { LayoutComponent } from './page/layout/layout.component';
+import { LoginComponent } from './components/public/login/login.component';
 
 export const routes: Routes = [
   {

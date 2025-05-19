@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import Swal from 'sweetalert2';
+import { LoginService } from '../../../auth/login.service';
 import { Login } from '../../../models/login/login';
 
 @Component({
@@ -16,11 +18,41 @@ export class LoginComponent {
 
   router = inject(Router);
 
+  loginService = inject(LoginService);
+
+  constructor() {
+    this.loginService.removerToken();
+  }
+
   logar() {
-    if (this.login.username == 'admin' && this.login.password == '123') {
-      this.router.navigate(['app/professor']);
-    } else if (this.login.username == 'user' && this.login.password == '123') {
-      this.router.navigate(['/aluno']);
-    } else alert('não de ucerto');
+    this.router.navigate(['professor']);
+
+    // this.loginService.logar(this.login).subscribe({
+    //   next: (token) => {
+    //     if (token) this.loginService.addToken(token); //MUITO IMPORTANTE
+
+    //     this.gerarToast().fire({ icon: 'success', title: 'Seja bem-vindo!' });
+    //     this.router.navigate(['admin/dashboard']);
+
+    //     this.router.navigate(['/admin/carros']);
+    //   },
+    //   error: (erro) => {
+    //     Swal.fire('Usuário ou senha incorretos!', '', 'error');
+    //   },
+    // });
+  }
+
+  gerarToast() {
+    return Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      },
+    });
   }
 }
