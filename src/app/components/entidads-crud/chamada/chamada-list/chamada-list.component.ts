@@ -25,6 +25,7 @@ import { ProfessorService } from '../../../../services/professor/professor.servi
 import { ChamadaFormComponent } from '../../chamada/chamada-form/chamada-form.component';
 import { PresencaListComponent } from '../../presenca/presenca-list/presenca-list.component';
 import { TurmaListComponent } from '../../turma/turma-list/turma-list.component';
+import { LoginService } from '../../../../auth/login.service';
 
 @Component({
   selector: 'app-chamada-list',
@@ -46,6 +47,7 @@ export class ChamadaListComponent {
   listaProfessores!: Professor[];
   chamadaEdit!: Chamada;
 
+  loginService = inject(LoginService);
   searchTerm = '';
 
   chamadaService = inject(ChamadaService);

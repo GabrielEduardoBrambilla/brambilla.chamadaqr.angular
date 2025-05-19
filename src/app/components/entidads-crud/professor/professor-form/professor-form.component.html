@@ -43,7 +43,7 @@
     </button>
     }
   </div> -->
-
+  @if(loginService.hasRole('ROLE_PROFESSOR')){
   <button
     mdbRipple
     type="button"
@@ -52,6 +52,7 @@
   >
     Registrar professor
   </button>
+  }
 </form>
 
 <ng-template #modalTurmaSelect>

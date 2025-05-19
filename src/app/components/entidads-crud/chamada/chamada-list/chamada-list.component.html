@@ -8,6 +8,7 @@
             class="d-flex align-items-center justify-content-between mb-3 text-center col-12"
           >
             <div class="d-flex text-nowrap gap-2">
+              @if(loginService.hasRole('ROLE_PROFESSOR')){
               <p class="fs-3 m-0 fw-bold">Criar chamadas</p>
               <button
                 (click)="selectTurma()"
@@ -22,6 +23,7 @@
               >
                 Selecionar professor
               </button>
+              }
             </div>
             <p class="my-2 btn btn-primary" (click)="new()">
               Iniciar uma chamada

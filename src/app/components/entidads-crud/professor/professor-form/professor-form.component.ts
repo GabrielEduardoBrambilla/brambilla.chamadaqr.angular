@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import Swal from 'sweetalert2';
+import { LoginService } from '../../../../auth/login.service';
 import { Professor } from '../../../../models/professor/professor';
 import { ProfessorService } from '../../../../services/professor/professor.service';
 import { TurmaListComponent } from '../../turma/turma-list/turma-list.component';
@@ -33,6 +34,7 @@ export class ProfessorFormComponent {
   roteador = inject(Router);
   professorService = inject(ProfessorService);
   modalService = inject(MdbModalService);
+  loginService = inject(LoginService);
 
   @ViewChild('modalTurmaSelect') modalTurmaSelect!: TemplateRef<any>;
   modalRef!: MdbModalRef<any>;
