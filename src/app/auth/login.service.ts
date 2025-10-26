@@ -2,17 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 import { Login } from '../models/login/login';
 import { LoginResponse } from '../models/login/login-response';
 import { Usuario } from './usuario';
-import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   http = inject(HttpClient);
-  API = `${environment.apiUrl}/alunos`;
+  API = `${environment.apiUrl}/auth/login`;
 
   constructor() {}
 
@@ -20,6 +20,8 @@ export class LoginService {
     return this.http.post<LoginResponse>(this.API, login).pipe(
       tap((response) => {
         // Armazenar apenas o access_token
+        console.log('Request for login');
+        console.log(response);
         this.addToken(response.access_token);
       })
     );
@@ -50,7 +52,15 @@ export class LoginService {
     if (!user || !user.realm_access || !user.realm_access.roles) {
       return false;
     }
-    return user.realm_access.roles.includes(role);
+    console.log('User role');
+    console.log(user.realm_access.roles);
+    console.log('User EXPECTED role');
+    console.log(role);
+    console.log('User HAS role');
+    console.log(
+      user.realm_access.roles.some((roleJWT) => roleJWT.includes(role))
+    );
+    return user.realm_access.roles.some((roleJWT) => roleJWT.includes(role));
   }
 
   getUsuarioLogado(): Usuario | null {

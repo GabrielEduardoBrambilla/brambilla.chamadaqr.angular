@@ -23,6 +23,8 @@ export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
           router.navigate(['/login']);
         } else if (err.status === 403) {
           alert('Acesso negado! Você não tem permissão.');
+          console.warn(err.message);
+          console.warn(err);
           router.navigate(['/login']);
         } else {
           console.error('HTTP error:', err);
