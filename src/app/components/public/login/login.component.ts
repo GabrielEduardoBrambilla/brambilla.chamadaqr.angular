@@ -26,19 +26,24 @@ export class LoginComponent {
 
   logar() {
     console.log(this.login);
-    console.log(this.login);
-    console.log(this.login);
     this.loginService.logar(this.login).subscribe({
-      next: (token) => {
-        if (token) this.loginService.addToken(token); //MUITO IMPORTANTE
+      next: (response) => {
+        console.log('Login bem-sucedido!', response);
+        // O token já foi salvo automaticamente pelo LoginService
 
         this.gerarToast().fire({ icon: 'success', title: 'Seja bem-vindo!' });
-        this.loginService.hasRole('PROFESSOR')
-          ? this.router.navigate(['professor'])
-          : this.router.navigate(['aluno']);
+
+        // Redirecionar baseado na role
+        if (this.loginService.hasRole('PROFESSOR')) {
+          this.router.navigate(['professor']);
+        } else if (this.loginService.hasRole('ALUNO')) {
+          this.router.navigate(['aluno']);
+        } else {
+          this.router.navigate(['home']);
+        }
       },
       error: (erro) => {
-        console.log(erro);
+        console.error('Erro no login:', erro);
         Swal.fire('Usuário ou senha incorretos!', '', 'error');
       },
     });

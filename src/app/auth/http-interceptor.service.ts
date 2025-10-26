@@ -5,11 +5,10 @@ import { catchError, throwError } from 'rxjs';
 
 export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
   let router = inject(Router);
-
   let token = localStorage.getItem('token');
 
-  console.log('entrou aqui 1');
-  if (token && !router.url.includes('/login')) {
+  // Não adicionar token na requisição de login
+  if (token && !request.url.includes('/auth/login')) {
     request = request.clone({
       setHeaders: { Authorization: 'Bearer ' + token },
     });
@@ -19,10 +18,11 @@ export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
     catchError((err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
-          alert('401 - tratar aqui');
+          alert('Sessão expirada! Faça login novamente.');
+          localStorage.removeItem('token');
           router.navigate(['/login']);
         } else if (err.status === 403) {
-          alert('403 - tratar aqui');
+          alert('Acesso negado! Você não tem permissão.');
           router.navigate(['/login']);
         } else {
           console.error('HTTP error:', err);

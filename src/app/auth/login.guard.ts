@@ -4,11 +4,21 @@ import { LoginService } from './login.service';
 
 export const loginGuard: CanActivateFn = (route, state) => {
   let loginService = inject(LoginService);
-  let roteador = inject(Router);
+  let router = inject(Router);
 
-  if (state.url == '/professor' && !loginService.hasRole('PROFESSOR')) {
-    window.alert('Sem premissões suficientes!');
-    roteador.navigate(['/aluno']);
+  // Verificar se está logado
+  if (!loginService.isLoggedIn()) {
+    router.navigate(['/login']);
+    return false;
+  }
+
+  // Verificar permissões específicas por rota
+  if (
+    state.url.startsWith('/professor') &&
+    !loginService.hasRole('PROFESSOR')
+  ) {
+    window.alert('Sem permissões suficientes!');
+    router.navigate(['/aluno']);
     return false;
   }
 

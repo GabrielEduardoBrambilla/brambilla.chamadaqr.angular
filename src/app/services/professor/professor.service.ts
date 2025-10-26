@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.prod';
 import { Professor } from '../../models/professor/professor';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Professor } from '../../models/professor/professor';
 export class ProfessorService {
   http = inject(HttpClient);
 
-  API = 'http://localhost:8080/professores';
+  API = `${environment.apiUrl}/professores`;
 
   constructor() {}
 

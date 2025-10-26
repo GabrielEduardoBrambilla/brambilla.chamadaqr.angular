@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Turma } from '../../models/turma/turma';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { Turma } from '../../models/turma/turma';
 export class TurmaService {
   http = inject(HttpClient);
 
-  API = 'http://localhost:8080/turmas';
+  API = `${environment.apiUrl}/turmas`;
 
   constructor() {}
 

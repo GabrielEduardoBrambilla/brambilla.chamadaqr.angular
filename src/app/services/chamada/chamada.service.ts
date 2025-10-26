@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Chamada } from '../../models/chamada/chamada';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { Chamada } from '../../models/chamada/chamada';
 export class ChamadaService {
   http = inject(HttpClient);
 
-  API = 'http://localhost:8080/chamadas';
+  API = `${environment.apiUrl}/chamadas`;
 
   constructor() {}
 
