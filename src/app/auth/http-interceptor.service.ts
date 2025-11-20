@@ -28,6 +28,9 @@ export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
           router.navigate(['/login']);
         } else {
           console.error('HTTP error:', err);
+          console.warn(err.message);
+          console.warn(err.type);
+          console.warn(err.status);
         }
       } else {
         console.error('An error occurred:', err);
